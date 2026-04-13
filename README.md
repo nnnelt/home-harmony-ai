@@ -78,3 +78,19 @@ Graduation Project: Excellent
 - UI frontend connection
 - Deployment on cloud (AWS / GCP)
 - User feedback learning loop
+
+- ## 🔍 Example Output
+
+Input:
+{
+  "style": "modern",
+  "budget": "medium"
+}
+
+Output:
+{
+  "matched_designers": [
+    {"name": "Designer A"},
+    {"name": "Designer B"}
+  ]
+}
