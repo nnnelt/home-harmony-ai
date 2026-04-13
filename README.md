@@ -1,96 +1,82 @@
-# 🏠 Home Harmony AI System
+# Home Harmony Full API
 
-An AI-powered platform that transforms the home design experience by combining machine learning, recommendation systems, and computer vision.
+This project provides a FastAPI application with three core features:
+1. **Image Search**
+2. **Text-Based Search**
+3. **Designer Matchmaking**
 
----
+## Setup
 
-## 🚀 Features
+1. Navigate to the project directory:
+   ```
+   cd home_harmony_full_api
+   ```
 
-### 🔹 Designer Matchmaking
-- Built using Random Forest (91.3% accuracy)
-- Matches users with designers based on:
-  - Style
-  - Budget
-  - Location
+2. (Optional) Create and activate a virtual environment:
+   - **Unix/macOS**:
+     ```
+     python3 -m venv .venv
+     source .venv/bin/activate
+     ```
+   - **Windows**:
+     ```
+     python -m venv .venv
+     .\.venv\Scripts\activate
+     ```
 
-### 🔹 Furniture Recommendation System
-- Collaborative filtering (user-based & item-based)
-- Uses cosine similarity to suggest products
+3. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
-### 🔹 Image & Text-Based Search
-- CLIP (ViT-B/32) for embeddings
-- FAISS for fast similarity search
-- Supports:
-  - Image upload → find similar furniture
-  - Text search → “modern chair” → results
+## Running
 
----
+Start the server:
+```
+uvicorn main:app --reload --port 8000
+```
 
-## 🧠 My Role
+The API docs will be available at:
+```
+http://127.0.0.1:8000/docs
+```
 
-I independently designed and developed the entire AI system including:
-- Model selection and training
-- Data preprocessing (encoding, normalization)
-- Recommendation algorithms
-- Image similarity pipeline (CLIP + FAISS)
-- Backend API integration (FastAPI)
+## Endpoints
 
----
+- **GET /**  
+  Health check; returns a welcome message.
 
-## 🛠 Tech Stack
+- **POST /search/image**  
+  Upload form file `file` (an image).  
+  Returns JSON:
+  ```json
+  {
+    "filename": "<uploaded_filename>",
+    "results": ["<dummy_result>"]
+  }
+  ```
 
-- Python
-- FastAPI
-- Scikit-learn
-- Pandas / NumPy
-- CLIP (OpenAI)
-- FAISS
+- **POST /search/text**  
+  Form field `query` (string).  
+  Returns JSON:
+  ```json
+  {
+    "query": "<your_query>",
+    "results": ["Product matching ... #1", "Product matching ... #2"]
+  }
+  ```
 
----
+- **POST /match**  
+  Form fields:
+  - `style` (string)
+  - `budget` (string)
 
-## 📡 API Endpoints
-
-### Image Search
-POST /search/image  
-Upload image → returns similar furniture
-
-### Text Search
-POST /search/text  
-Input query → returns recommendations
-
-### Matchmaking
-POST /match  
-Input: style, budget → returns designers
-
----
-
-## 🎓 Education
-
-Bachelor’s Degree in Computers and Information Technology  
-Alexandria University & Egyptian E-Learning University  
-Graduation: 2025  
-Graduation Project: Excellent
-
----
-
-## ⚡ Future Improvements
-- Real dataset integration
-- UI frontend connection
-- Deployment on cloud (AWS / GCP)
-- User feedback learning loop
-
-- ## 🔍 Example Output
-
-Input:
-{
-  "style": "modern",
-  "budget": "medium"
-}
-
-Output:
-{
-  "matched_designers": [
-    {"name": "Designer A"},
-    {"name": "Designer B"}
-  ]
-}
+  Returns JSON:
+  ```json
+  {
+    "matched_designers": [
+      {"name": "Alice", ...},
+      {"name": "Bob", ...}
+    ]
+  }
+  ```
